@@ -2,16 +2,15 @@ package main
 
 import (
 	"context"
-	"dagger/github/internal/dagger"
+	"dagger/progress/internal/dagger"
 	"fmt"
 	"strings"
 	"time"
 )
 
-type Github struct{}
 
-// NewProgressReport creates a new progress report for tracking tasks on a GitHub issue
-func (gh Github) NewProgressReport(
+// NewProgress creates a new progress report for tracking tasks on a GitHub issue
+func New(
 	// A unique identifier for this progress report in the given issue.
 	// Using the same key on the same issue will overwrite the same comment in the issue
 	key string,
@@ -21,8 +20,8 @@ func (gh Github) NewProgressReport(
 	repo string,
 	// Issue number to report progress on
 	issue int,
-) ProgressReport {
-	return ProgressReport{
+) Progress {
+	return Progress{
 		Token: token,
 		Repo:  repo,
 		Issue: issue,
@@ -30,8 +29,8 @@ func (gh Github) NewProgressReport(
 	}
 }
 
-// A system for reporting on the progress of a task on a github issue
-type ProgressReport struct {
+// A progress report via a github issue comment
+type Progress struct{
 	Token   *dagger.Secret
 	Repo    string // +private
 	Issue   int    // +private
@@ -50,24 +49,24 @@ type Task struct {
 // Write a new summary for the progress report.
 // Any previous summary is overwritten.
 // This function only stages the change. Call publish to actually apply it.
-func (r ProgressReport) WriteSummary(
+func (r Progress) WriteSummary(
 	ctx context.Context,
 	// The text of the summary, markdown-formatted
 	// It will be formatted as-is in the comment, after the title and before the task list
 	summary string,
-) (ProgressReport, error) {
+) (Progress, error) {
 	r.Summary = summary
 	return r, nil
 }
 
 // Append new text to the summary, without overwriting it
 // This function only stages the change. Call publish to actually apply it.
-func (r ProgressReport) AppendSummary(
+func (r Progress) AppendSummary(
 	ctx context.Context,
 	// The text of the summary, markdown-formatted
 	// It will be formatted as-is in the comment, after the title and before the task list
 	summary string,
-) (ProgressReport, error) {
+) (Progress, error) {
 	if r.Summary == "" {
 		r.Summary = summary
 		return r, nil
@@ -85,7 +84,7 @@ func (r ProgressReport) AppendSummary(
 
 // Report the starting of a new task
 // This function only stages the change. Call publish to actually apply it.
-func (r ProgressReport) StartTask(
+func (r Progress) StartTask(
 	ctx context.Context,
 	// A unique key for the task. Not sent in the comment. Use to update the task status later.
 	key string,
@@ -93,7 +92,7 @@ func (r ProgressReport) StartTask(
 	description string,
 	// The task status. It will be formatted as a cell in the second column of a markdown table
 	status string,
-) (ProgressReport, error) {
+) (Progress, error) {
 	r.Tasks = append(r.Tasks, Task{
 		Key:         key,
 		Description: description,
@@ -105,25 +104,25 @@ func (r ProgressReport) StartTask(
 // Write a new title for the progress report.
 // Any previous title is overwritten.
 // This function only stages the change. Call publish to actually apply it.
-func (r ProgressReport) WriteTitle(
+func (r Progress) WriteTitle(
 	ctx context.Context,
 	// The summary. It should be a single line of unformatted text.
 	// It will be formatted as a H2 title in the markdown body of the comment
 	title string,
-) (ProgressReport, error) {
+) (Progress, error) {
 	r.Title = strings.ToTitle(title)
 	return r, nil
 }
 
 // Update the status of a task
 // This function only stages the change. Call publish to actually apply it.
-func (r ProgressReport) UpdateTask(
+func (r Progress) UpdateTask(
 	ctx context.Context,
 	// A unique key for the task. Use to update the task status later.
 	key string,
 	// The task status. It will be formatted as a cell in the second column of a markdown table
 	status string,
-) (ProgressReport, error) {
+) (Progress, error) {
 	for i := range r.Tasks {
 		if r.Tasks[i].Key == key {
 			r.Tasks[i].Status = status
@@ -136,7 +135,7 @@ func (r ProgressReport) UpdateTask(
 // Publish all staged changes to the status update.
 // This will cause a single comment on the target issue to be either
 // created, or updated in-place.
-func (r ProgressReport) Publish(ctx context.Context) error {
+func (r Progress) Publish(ctx context.Context) error {
 	var contents string
 	if r.Title != "" {
 		contents = "## " + r.Title + "\n\n"

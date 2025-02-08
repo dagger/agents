@@ -1,4 +1,4 @@
-module dagger/github
+module dagger/progress
 
 go 1.23.2
 
