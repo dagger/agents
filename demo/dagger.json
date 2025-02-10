@@ -9,13 +9,13 @@
       "pin": "71d63322bf9979eb97b9e5d1457a3dcba4ef0ec4"
     },
     {
-      "name": "github",
-      "source": "../github"
-    },
-    {
       "name": "go",
       "source": "github.com/dagger/dagger/modules/go",
       "pin": "a99139ba894f240808fa6c1c9fd995ffba58cf41"
+    },
+    {
+      "name": "progress",
+      "source": "../progress"
     },
     {
       "name": "workspace",

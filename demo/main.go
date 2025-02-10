@@ -42,12 +42,12 @@ func (m *Demo) GoProgrammer(ctx context.Context,
 	// +defaultPath="prompts/reporter-start.txt"
 	reporterPrompt *dagger.File,
 ) (*dagger.Container, error) {
-	progress := dag.Github().NewProgressReport(assignment, m.Token, m.Repo, m.Issue)
+	progress := dag.Progress(assignment, m.Token, m.Repo, m.Issue)
 	// Send the initial progress report (we will update it later)
 	progress = dag.Llm().
-		WithGithubProgressReport(progress).
+		WithProgress(progress).
 		WithPromptFile(reporterPrompt, dagger.LlmWithPromptFileOpts{Vars: []string{"assignment", assignment}}).
-		GithubProgressReport()
+		Progress()
 	if err := progress.Publish(ctx); err != nil {
 		return nil, err
 	}
