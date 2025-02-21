@@ -83,6 +83,48 @@ Dagger uses your system's standard environment variables to route LLM requests. 
 
 Dagger will look for these variables in your environment, or in a `.env` file in the current directory (`.env` files in parent directories are not yet supported).
 
+#### Using with Ollama
+
+You can use Ollama as a local LLM provider. Here's how to set it up:
+
+1. Install Ollama from [ollama.ai](https://ollama.ai)
+
+2. Start Ollama server with host binding:
+
+```shell
+OLLAMA_HOST="0.0.0.0:11434" ollama serve
+```
+
+3. Get your host machine's IP address:
+
+On macOS / Linux (modern distributions):
+
+```shell
+ifconfig | grep "inet " | grep -v 127.0.0.1
+```
+
+On Linux (older distributions):
+
+```shell
+ip addr | grep "inet " | grep -v 127.0.0.1
+```
+
+This step is needed because our LLM type runs inside the engine and needs to reach your local Ollama service. While we're potentially exploring the implementatin of automatic tunneling, for now you'll need to use your machine's actual IP address instead of localhost to allow the containers to communicate with Ollama.
+
+1. Configure the following environment variables (replace `YOUR_IP` with the IP address from step 3):
+
+```plaintext
+OPENAI_API_KEY="nothing"
+OPENAI_BASE_URL=http://YOUR_IP:11434/v1/
+OPENAI_MODEL=llama3.2
+```
+
+For example, if your IP is 192.168.64.1:
+```plaintext
+OPENAI_API_KEY="nothing"
+OPENAI_BASE_URL=http://192.168.64.1:11434/v1/
+OPENAI_MODEL=llama3.2
+```
 
 ## Run Melvin from the command-line
 
