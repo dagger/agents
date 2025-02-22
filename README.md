@@ -73,7 +73,7 @@ The repository includes several examples of Dagger modules with agentic capabili
 
 You will need a *development version* of Dagger which adds native support for LLM prompting and tool calling.
 
-Once this feature is merged (current target is 0.17), Melvin will support with a stable release of Dagger.
+Once this feature is merged (current target is 0.17), a development build will no longer be required.
 
 Install the development version of LLM-enabled Dagger:
 
@@ -186,10 +186,10 @@ dagger init
 
 2. Install the modules you wish to load
 
-For example, to install the Melvin toy-workspace module:
+For example, to install the toy-workspace module:
 
 ```console
-dagger install github.com/shykes/melvin/toy-workspace
+dagger install github.com/dagger/agents/toy-workspace
 ```
 
 3. Install a generated client in your project
