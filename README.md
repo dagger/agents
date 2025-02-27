@@ -37,7 +37,7 @@ Each module has the following features:
 
 - Runs in containers, for maximum portability and reproducibility
 - Can be run from the command-line, or programmatically via an API
-- Generated bindings for Go, Python, Typescript, PHP (experimental, Java (experimental), and Rust (experimental).
+- Generated bindings for Go, Python, Typescript, PHP (experimental), Java (experimental), and Rust (experimental).
 - End-to-end tracing of prompts, tool calls, and even low-level system operations. 100% of agent state changes are traced.
 - Cross-language extensions. Add your own modules in any language.
 - Platform-independent. No infrastructure lock-in! Runs on any hosting provider that can run containers.
