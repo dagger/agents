@@ -1,0 +1,19 @@
+{
+  "name": "laravel-assistant",
+  "engineVersion": "v0.17.0-llm.2",
+  "sdk": {
+    "source": "php"
+  },
+  "dependencies": [
+    {
+      "name": "composer",
+      "source": "github.com/jasonmccallister/dagger-composer",
+      "pin": "fc0ac11599eb68c165bd8ba30072ab9c1300aa41"
+    },
+    {
+      "name": "php",
+      "source": "github.com/jasonmccallister/dagger-php",
+      "pin": "59cf8b25990c686fa9da2ea586caeec899e4581e"
+    }
+  ]
+}
