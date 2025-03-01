@@ -36,6 +36,9 @@ func (w ToyWorkspace) Write(path, content string) ToyWorkspace {
 
 // Build the code at the current directory in the workspace
 func (w *ToyWorkspace) Build(ctx context.Context) error {
-	_, err := w.Container.WithExec([]string{"go", "build", "./..."}).Stderr(ctx)
+	_, err := w.Container.WithExec(
+		[]string{"go", "build", "./..."},
+		dagger.ContainerWithExecOpts{Expect: dagger.ReturnTypeAny}).
+		Stderr(ctx)
 	return err
 }
