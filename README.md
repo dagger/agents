@@ -5,4 +5,4 @@ This repository contains examples of AI agents built with [Dagger](https://githu
 - [toy-programmer](./toy-programmer): a very, very simple programmer micro-agent for demo purposes
 - [melvin](./melvin): Melvin is [Devin](https://devin.ai)'s little cousin 😄. An experimental open-source coding agent, made of small composable modules rather than one monolithic app.
 - [multiagent](./multiagent-demo): a demo using multiple LLMs to solve a problem
-- [github-go-coder](./github-go-coder): a Go programmer micro-agent that receives assignments from GitHub issues and creates PRs with it's solutions
+- [github-go-coder](./github-go-coder): a Go programmer micro-agent that receives assignments from GitHub issues and creates PRs with its solutions
