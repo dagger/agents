@@ -1,0 +1,14 @@
+{
+  "name": "java",
+  "engineVersion": "v0.16.0-250218174149-c9ceca149ef7",
+  "sdk": {
+    "source": "github.com/lgtdio/dagger/sdk/java@llm-java"
+  },
+  "dependencies": [
+    {
+      "name": "workspace",
+      "source": "../workspace"
+    }
+  ],
+  "source": "."
+}
