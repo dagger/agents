@@ -1,7 +1,0 @@
-{
-  "name": "moduleWorkspace",
-  "engineVersion": "v0.17.0-llm.2",
-  "sdk": {
-    "source": "typescript"
-  }
-}
